@@ -1,8 +1,11 @@
 import React from 'react';
+import { Typography } from '@material-ui/core';
 
 const header = () => {
     return (
-        <h1>Header</h1>
+        <Typography variant="h2" component="h1">
+            Kraken UI
+        </Typography>
     )
 }
 
