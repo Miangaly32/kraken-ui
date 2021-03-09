@@ -7,7 +7,6 @@ function App() {
   return (
     <Grid
       container
-      spacing={50}
       justify="center"
       alignItems="center"
       direction="column"

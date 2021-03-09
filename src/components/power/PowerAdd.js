@@ -24,7 +24,7 @@ const PowerAdd = () => {
                         variant="contained"
                         color="primary"
                     >
-                        Supprimer
+                        Ajouter
               </Button>
                 </Grid>
             </FormControl>
