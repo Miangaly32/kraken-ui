@@ -1,30 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Grid, Paper } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { Header, Footer, KrakenCreate, KrakenDetails, TentacleAdd, TentacleRemove, PowerAdd } from './components';
 //import './App.css';
-import axios from "axios";
 
 function App() {
   const [kraken, setKraken] = useState({ id: "", age: "", name: "", size: "", weight: "", tentacles: [], powers: [] });
   const [errors, setErrors] = useState('');
 
-  useEffect(() => {
-    if (kraken.id) {
-      axios.get(`http://localhost:8000/kraken/` + kraken.id)
-        .then(res => {
-          setKraken(res.data);
-        })
-        .catch(err => {
-          if (err.response) {
-            setErrors(err.response.data.Errors);
-          }
-        })
-    }
-  }, []);
-
   const currentKraken = (kr) => {
     setKraken(kr);
+    console.log(kraken.tentacles.length)
   }
 
   const getErrors = (err) => {
@@ -40,36 +26,36 @@ function App() {
   let removeTentacle;
   let addPower;
 
-  if (kraken.id) {
-    addTentacle = <TentacleAdd kraken={kraken} getErrors={getErrors} />;
+  if (kraken.id !== '') {
+    let tentacleNb = kraken.tentacles.length;
+    if (tentacleNb < 8) {
+      addTentacle = <TentacleAdd kraken={kraken} getErrors={getErrors} currentKraken={currentKraken} />;
+    }
+    if (tentacleNb > 0) {
+      removeTentacle = <TentacleRemove kraken={kraken} getErrors={getErrors} currentKraken={currentKraken} />;
+    }
 
 
     let canAddPower = false;
+    let krakenPowerNb = kraken.powers.length
 
-    if (kraken.powers !== undefined && kraken.tentacles !== undefined) {
-      let krakenPowerNb = kraken.powers.length;
-      let tentacleNb = kraken.tentacles.length;
-
-      if (tentacleNb > 0) {
-        removeTentacle = <TentacleRemove kraken={kraken} />;
-      }
-
-      if (krakenPowerNb === 0) {
+    if (krakenPowerNb === 0) {
+      canAddPower = true;
+    } else if (krakenPowerNb === 1) {
+      if (tentacleNb >= 4) {
         canAddPower = true;
-      } else if (krakenPowerNb === 1) {
-        if (tentacleNb >= 4) {
-          canAddPower = true;
-        }
-      } else if (krakenPowerNb === 2) {
-        if (tentacleNb >= 8) {
-          canAddPower = true;
-        }
+      }
+    } else if (krakenPowerNb === 2) {
+      if (tentacleNb >= 8) {
+        canAddPower = true;
       }
     }
     if (canAddPower) {
       addPower = <PowerAdd kraken={kraken} />
     }
+
   }
+
 
   return (
     <Grid

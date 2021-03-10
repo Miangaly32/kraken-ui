@@ -1,12 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography, Select, FormControl, MenuItem, InputLabel, Grid, Button } from '@material-ui/core';
+import axios from "axios";
 
-const TentacleRemove = ({ kraken }) => {
+const TentacleRemove = (props) => {
+
+    const [id, setId] = useState();
+
     let tentacles;
-    if (kraken.tentacles !== undefined && kraken.tentacles.length > 0) {
-        tentacles = kraken.tentacles.map((tentacle) => (
+    if (props.kraken.tentacles !== undefined && props.kraken.tentacles.length > 0) {
+        tentacles = props.kraken.tentacles.map((tentacle) => (
             < MenuItem key={tentacle.id} value={tentacle.id}>{tentacle.name}</MenuItem>
         ))
+    }
+
+    const handleChange = (e) => {
+        setId(e.target.value)
+    }
+
+    const remove = (e) => {
+        e.preventDefault()
+        axios.delete(`http://localhost:8000/kraken/${id}/tentacle`)
+            .then(res => {
+                props.currentKraken(res.data.kraken)
+            })
+            .catch(err => {
+                if (err.response) {
+                    props.getErrors(err.response.data.Errors)
+                }
+            })
     }
 
     return (
@@ -16,10 +37,11 @@ const TentacleRemove = ({ kraken }) => {
             </Typography>
 
             <FormControl style={{ minWidth: 300 }}>
-                <InputLabel id="demo-simple-select-label">Nom du tentacule</InputLabel>
+                <InputLabel id="label">Nom du tentacule</InputLabel>
                 <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
+                    labelId="label"
+                    id="id"
+                    onChange={handleChange}
                 >
                     {tentacles}
                 </Select>
@@ -28,6 +50,7 @@ const TentacleRemove = ({ kraken }) => {
                         type="button"
                         variant="contained"
                         color="secondary"
+                        onClick={remove}
                     >
                         Supprimer
               </Button>

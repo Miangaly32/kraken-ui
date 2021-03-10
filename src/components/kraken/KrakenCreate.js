@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormGroup, Typography, Button, Grid, TextField } from '@material-ui/core';
 import axios from "axios";
 
@@ -21,6 +21,10 @@ const KrakenCreate = (props) => {
     const handleSizeChange = (e) => {
         setSize(e.target.value)
     }
+
+    useEffect(() => {
+        props.getErrors('');
+    }, [])
 
     const saveKraken = (e) => {
         e.preventDefault()

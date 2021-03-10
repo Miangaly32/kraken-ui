@@ -42,7 +42,7 @@ const krakenDetails = ({ kraken }) => {
             </Typography>
             <FormGroup >
                 <TextField
-                    id="outlined-read-only-input"
+                    id="kraken-name"
                     label="Nom du kraken"
                     value={kraken.name}
                     InputProps={{
@@ -50,7 +50,7 @@ const krakenDetails = ({ kraken }) => {
                     }}
                 />
                 <TextField
-                    id="outlined-read-only-input"
+                    id="kraken-age"
                     label="Age"
                     value={kraken.age}
                     InputProps={{
@@ -58,7 +58,7 @@ const krakenDetails = ({ kraken }) => {
                     }}
                 />
                 <TextField
-                    id="outlined-read-only-input"
+                    id="kraken-weight"
                     label="Poids(tonne)"
                     value={kraken.weight}
                     InputProps={{
@@ -66,7 +66,7 @@ const krakenDetails = ({ kraken }) => {
                     }}
                 />
                 <TextField
-                    id="outlined-read-only-input"
+                    id="kraken-size"
                     label="Taille(metre)"
                     value={kraken.size}
                     InputProps={{

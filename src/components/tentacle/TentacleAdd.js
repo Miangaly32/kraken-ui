@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Typography, Button, FormControl, Grid, InputLabel, Input } from '@material-ui/core';
 import axios from "axios";
 
@@ -9,7 +9,10 @@ const TentacleAdd = (props) => {
         setName(e.target.value)
     }
 
-    props.getErrors('');
+    useEffect(() => {
+        props.getErrors('');
+    }, [])
+
 
     const saveTentacle = (e) => {
         e.preventDefault()
@@ -31,8 +34,8 @@ const TentacleAdd = (props) => {
                 Ajouter un tentacule au kraken
             </Typography>
             <FormControl>
-                <InputLabel htmlFor="name">Nom du tentacule</InputLabel>
-                <Input id="name" value={name} onChange={handleNameChange} />
+                <InputLabel htmlFor="nameTentacle">Nom du tentacule</InputLabel>
+                <Input id="nameTentacle" value={name} onChange={handleNameChange} />
                 <Grid item style={{ marginTop: 16 }}>
                     <Button
                         type="button"
