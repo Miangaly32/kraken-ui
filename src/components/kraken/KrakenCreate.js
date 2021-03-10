@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FormGroup, Typography, Button, FormControl, Grid, InputLabel, TextField, Input } from '@material-ui/core';
+import { FormGroup, Typography, Button, Grid, TextField } from '@material-ui/core';
 import axios from "axios";
 
 const KrakenCreate = (props) => {
@@ -7,6 +7,7 @@ const KrakenCreate = (props) => {
     const [age, setAge] = useState('');
     const [weight, setWeight] = useState('');
     const [size, setSize] = useState('');
+
 
     const handleNameChange = (e) => {
         setName(e.target.value)
@@ -21,18 +22,21 @@ const KrakenCreate = (props) => {
         setSize(e.target.value)
     }
 
-
     const saveKraken = (e) => {
         e.preventDefault()
         axios.post(`http://localhost:8000/kraken`, { name: name, age: age, weight: weight, size: size })
             .then(res => {
-                console.log(res);
-                console.log(res.data);
+                props.currentKraken(res.data.kraken)
+                setName('')
+                setAge('')
+                setWeight('')
+                setSize('')
             })
-        setName('')
-        setAge('')
-        setWeight('')
-        setSize('')
+            .catch(err => {
+                if (err.response) {
+                    props.getErrors(err.response.data)
+                }
+            })
     }
 
     return (

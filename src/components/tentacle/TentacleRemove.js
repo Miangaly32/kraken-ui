@@ -1,7 +1,14 @@
 import React from 'react';
 import { Typography, Select, FormControl, MenuItem, InputLabel, Grid, Button } from '@material-ui/core';
 
-const TentacleRemove = () => {
+const TentacleRemove = ({ kraken }) => {
+    let tentacles;
+    if (kraken.tentacles !== undefined && kraken.tentacles.length > 0) {
+        tentacles = kraken.tentacles.map((tentacle) => (
+            < MenuItem key={tentacle.id} value={tentacle.id}>{tentacle.name}</MenuItem>
+        ))
+    }
+
     return (
         <div style={{ padding: 10, marginBottom: 10 }}>
             <Typography variant="h4" component="h2">
@@ -14,9 +21,7 @@ const TentacleRemove = () => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                 >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
+                    {tentacles}
                 </Select>
                 <Grid item style={{ marginTop: 16 }}>
                     <Button
@@ -28,7 +33,7 @@ const TentacleRemove = () => {
               </Button>
                 </Grid>
             </FormControl>
-        </div>
+        </div >
     )
 }
 
