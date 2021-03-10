@@ -1,7 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Select, FormControl, MenuItem, InputLabel, Grid, Button } from '@material-ui/core';
+import axios from "axios";
 
-const PowerAdd = () => {
+const PowerAdd = (props) => {
+
+    const [powers, setPowers] = useState([]);
+
+    useEffect(() => {
+        props.getErrors('');
+        axios.get(`http://localhost:8000/powers`)
+            .then(res => {
+                setPowers(res.data)
+            })
+            .catch(err => {
+                if (err.response) {
+                    props.getErrors(err.response.data)
+                }
+            })
+    }, [])
+
+    const listPowers = powers.map((power) => (
+        < MenuItem key={power.id} value={power.id}>{power.name}</MenuItem>
+    ))
+
     return (
         <div style={{ padding: 10, marginBottom: 10 }}>
             <Typography variant="h4" component="h2">
@@ -9,14 +30,12 @@ const PowerAdd = () => {
             </Typography>
 
             <FormControl style={{ minWidth: 300 }}>
-                <InputLabel id="demo-simple-select-label">Nom du pouvoir</InputLabel>
+                <InputLabel id="power-label">Nom du pouvoir</InputLabel>
                 <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
+                    labelId="power-label"
+                    id="power-select"
                 >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
+                    listPowers
                 </Select>
                 <Grid item style={{ marginTop: 16 }}>
                     <Button
