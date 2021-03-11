@@ -1,16 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, Paper } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import { Header, Footer, KrakenCreate, KrakenDetails, TentacleAdd, TentacleRemove, PowerAdd } from './components';
+import { Header, Footer, KrakenList, KrakenCreate, KrakenDetails, TentacleAdd, TentacleRemove, PowerAdd } from './components';
 //import './App.css';
+import axios from "axios";
 
 function App() {
   const [kraken, setKraken] = useState({ id: "", age: "", name: "", size: "", weight: "", tentacles: [], powers: [] });
   const [errors, setErrors] = useState('');
 
+  const [krakens, setKrakens] = useState([]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8000/krakens`)
+      .then(res => {
+        setKrakens(res.data)
+      })
+      .catch(err => {
+        if (err.response) {
+          getErrors(err.response.data)
+        }
+      })
+  }, [])
+
+  const addKrakenList = (kr) => {
+    setKrakens([...krakens, kr])
+  }
+
   const currentKraken = (kr) => {
     setKraken(kr);
-    console.log(kraken.tentacles.length)
   }
 
   const getErrors = (err) => {
@@ -75,8 +93,9 @@ function App() {
           xs={6}
         >
           <Paper >
+            <KrakenList krakens={krakens} currentKraken={currentKraken} getErrors={getErrors} />
             {hasError}
-            <KrakenCreate getErrors={getErrors} currentKraken={currentKraken} />
+            <KrakenCreate addKrakenList={addKrakenList} getErrors={getErrors} currentKraken={currentKraken} />
             {addTentacle}
             {removeTentacle}
             {addPower}

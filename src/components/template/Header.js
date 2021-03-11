@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 
-const header = () => {
+const Header = () => {
     return (
         <Typography variant="h2" component="h1">
             Kraken UI
@@ -9,4 +9,4 @@ const header = () => {
     )
 }
 
-export default header;
+export default Header;
