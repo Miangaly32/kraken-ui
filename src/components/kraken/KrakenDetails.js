@@ -29,11 +29,13 @@ const krakenDetails = ({ kraken }) => {
             </TableRow>
         ))
         powers = kraken.powers.map(power => (
-            <tr>
-                <td>{power.name}</td>
-                <td>{power.maxUsage}</td>
-            </tr>)
-        )
+            <TableRow key={power.id}>
+                <TableCell component="th" scope="row">
+                    {power.name}
+                </TableCell>
+                <TableCell align="right">{power.maxUsage}</TableCell>
+            </TableRow>
+        ))
     }
     return (
         <Paper style={{ padding: 10, minHeight: '100vh' }}>

@@ -51,7 +51,7 @@ function App() {
       }
     }
     if (canAddPower) {
-      addPower = <PowerAdd getErrors={getErrors} />
+      addPower = <PowerAdd getErrors={getErrors} kraken={kraken} currentKraken={currentKraken} />
     }
 
   }

@@ -5,6 +5,23 @@ import axios from "axios";
 const PowerAdd = (props) => {
 
     const [powers, setPowers] = useState([]);
+    const [power, setPower] = useState();
+
+    const handleChange = (e) => {
+        setPower(e.target.value)
+    }
+    const savePower = (e) => {
+        axios.post(`http://localhost:8000/kraken/${props.kraken.id}/power/${power}`)
+            .then(res => {
+                props.currentKraken(res.data.kraken)
+
+            })
+            .catch(err => {
+                if (err.response) {
+                    props.getErrors(err.response.data)
+                }
+            })
+    }
 
     useEffect(() => {
         props.getErrors('');
@@ -34,14 +51,16 @@ const PowerAdd = (props) => {
                 <Select
                     labelId="power-label"
                     id="power-select"
+                    onChange={handleChange}
                 >
-                    listPowers
+                    {listPowers}
                 </Select>
                 <Grid item style={{ marginTop: 16 }}>
                     <Button
                         type="button"
                         variant="contained"
                         color="primary"
+                        onClick={savePower}
                     >
                         Ajouter
               </Button>
