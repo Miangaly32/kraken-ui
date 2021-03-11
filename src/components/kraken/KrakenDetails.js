@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, Paper, TextField, FormGroup, TableHead, TableRow, Table, TableBody, TableCell } from '@material-ui/core';
 
-const krakenDetails = ({ kraken }) => {
+const KrakenDetails = ({ kraken }) => {
     let tentacles;
     let powers;
 
@@ -115,4 +115,4 @@ const krakenDetails = ({ kraken }) => {
     )
 }
 
-export default krakenDetails;
+export default KrakenDetails;

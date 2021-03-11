@@ -8,7 +8,7 @@ const menuStyle = makeStyles({
     }
 });
 
-const footer = () => {
+const Footer = () => {
     const menuClasses = menuStyle();
     return (
         <AppBar position="static" color="default">
@@ -21,4 +21,4 @@ const footer = () => {
     )
 }
 
-export default footer;
+export default Footer;

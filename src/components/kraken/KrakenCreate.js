@@ -31,6 +31,7 @@ const KrakenCreate = (props) => {
         axios.post(`http://localhost:8000/kraken`, { name: name, age: age, weight: weight, size: size })
             .then(res => {
                 props.currentKraken(res.data.kraken)
+                props.addKrakenList(res.data.kraken)
                 setName('')
                 setAge('')
                 setWeight('')
